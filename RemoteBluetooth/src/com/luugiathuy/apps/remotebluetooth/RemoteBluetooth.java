@@ -89,6 +89,7 @@ public class RemoteBluetooth extends Activity {
 //     	                }
 
      	                case MotionEvent.ACTION_MOVE:{
+     	                	onMouseMove((int) event.getX(), (int) event.getY());
      	                    xCoord.setText(String.valueOf((int) event.getX()));
      	                    yCoord.setText(String.valueOf((int) event.getY()));
      	                    break;
