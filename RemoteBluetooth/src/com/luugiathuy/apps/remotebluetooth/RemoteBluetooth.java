@@ -89,7 +89,7 @@ public class RemoteBluetooth extends Activity {
 //     	                }
 
      	                case MotionEvent.ACTION_MOVE:{
-     	                	onMouseMove((int) event.getX(), (int) event.getY());
+     	                	onMouseMove((byte) event.getX(), (byte) event.getY());
      	                    xCoord.setText(String.valueOf((int) event.getX()));
      	                    yCoord.setText(String.valueOf((int) event.getY()));
      	                    break;
@@ -252,8 +252,9 @@ public class RemoteBluetooth extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	public boolean onMouseMove(int x, int y){
-		mCommandService.write(BluetoothCommandService.MOUSE_MOVE);
+	public boolean onMouseMove(byte x, byte y){
+		
+		mCommandService.write(new byte[]{x,y});
 
 		return true;
 		

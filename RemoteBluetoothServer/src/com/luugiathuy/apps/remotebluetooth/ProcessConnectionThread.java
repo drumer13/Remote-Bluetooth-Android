@@ -1,5 +1,6 @@
 package com.luugiathuy.apps.remotebluetooth;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
@@ -14,6 +15,7 @@ public class ProcessConnectionThread implements Runnable{
 	private static final int EXIT_CMD = -1;
 	private static final int KEY_RIGHT = 1;
 	private static final int KEY_LEFT = 2;
+	private static final int MOVE_MOUSE = 3;
 	
 	public ProcessConnectionThread(StreamConnection connection)
 	{
@@ -38,7 +40,7 @@ public class ProcessConnectionThread implements Runnable{
 	        		break;
 	        	}
 	        	
-	        	processCommand(command);
+	        	processCommand(inputStream.read());
         	}
         } catch (Exception e) {
     		e.printStackTrace();
@@ -69,5 +71,21 @@ public class ProcessConnectionThread implements Runnable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	private void processCommand(byte[] coordinate) {
+	
+			byte x = coordinate[0];
+			byte y = coordinate[1];
+			Robot robot;
+			try {
+				robot = new Robot();
+				robot.mouseMove(x, y);
+			} catch (AWTException e) {
+				e.printStackTrace();
+			}
+			
+		
 	}
 }

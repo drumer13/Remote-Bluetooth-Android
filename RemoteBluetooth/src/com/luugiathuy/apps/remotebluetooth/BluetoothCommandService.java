@@ -42,7 +42,6 @@ public class BluetoothCommandService {
     public static final int EXIT_CMD = -1;
     public static final int VOL_UP = 1;
     public static final int VOL_DOWN = 2;
-    public static final int MOUSE_MOVE = 3;
     
     /**
      * Constructor. Prepares a new BluetoothChat session.
@@ -363,7 +362,7 @@ public class BluetoothCommandService {
                 Log.e(TAG, "Exception during write", e);
             }
         }
-
+      
         public void cancel() {
             try {
             	mmOutStream.write(EXIT_CMD);
