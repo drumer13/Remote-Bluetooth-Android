@@ -11,6 +11,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +68,36 @@ public class RemoteBluetooth extends Activity {
             finish();
             return;
         }
+        
+     // X,Y positions on mobile screen
+     		final TextView xCoord = (TextView) findViewById(R.id.textView1);
+     	    final TextView yCoord = (TextView) findViewById(R.id.textView2);
+
+     	    
+     	    final View touchView = findViewById(R.id.textView3);
+     	    touchView.setOnTouchListener(new View.OnTouchListener() {
+
+     	    	// Tracking touch input
+     	        public boolean onTouch(View v, MotionEvent event) {
+     	            final int action = event.getAction();
+     	            switch (action & MotionEvent.ACTION_MASK) {
+
+//     	                case MotionEvent.ACTION_DOWN: {
+//     	                    xCoord.setText(String.valueOf((int) event.getX()));
+//     	                    yCoord.setText(String.valueOf((int) event.getY()));
+//     	                    break;
+//     	                }
+
+     	                case MotionEvent.ACTION_MOVE:{
+     	                    xCoord.setText(String.valueOf((int) event.getX()));
+     	                    yCoord.setText(String.valueOf((int) event.getY()));
+     	                    break;
+     	                }
+     	            }
+     	            return true;
+     	        }
+     	    });
+     	    
     }
 
 	@Override
@@ -218,4 +250,12 @@ public class RemoteBluetooth extends Activity {
 		
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	public boolean onMouseMove(int x, int y){
+		mCommandService.write(BluetoothCommandService.MOUSE_MOVE);
+
+		return true;
+		
+	}
+	
 }
