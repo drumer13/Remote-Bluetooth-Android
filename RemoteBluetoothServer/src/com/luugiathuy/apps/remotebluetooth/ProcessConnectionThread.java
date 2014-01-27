@@ -32,7 +32,9 @@ public class ProcessConnectionThread implements Runnable{
 			System.out.println("waiting for input");
 	        
 	        while (true) {
-	        	int command = inputStream.read();
+	        	
+        		int command = inputStream.read();
+	        	System.out.println("comand " + command);	
 	        	
 	        	if (command == EXIT_CMD)
 	        	{	
@@ -40,8 +42,9 @@ public class ProcessConnectionThread implements Runnable{
 	        		break;
 	        	}
 	        	
-	        	processCommand(inputStream.read());
-        	}
+	        	processCommand(command, inputStream);
+        	
+	        }
         } catch (Exception e) {
     		e.printStackTrace();
     	}
@@ -51,7 +54,7 @@ public class ProcessConnectionThread implements Runnable{
 	 * Process the command from client
 	 * @param command the command code
 	 */
-	private void processCommand(int command) {
+	private void processCommand(int command, InputStream inputStream) {
 		try {
 			Robot robot = new Robot();
 			switch (command) {
@@ -67,6 +70,12 @@ public class ProcessConnectionThread implements Runnable{
 	    		// release the key after it is pressed. Otherwise the event just keeps getting trigged	    		
 	    		robot.keyRelease(KeyEvent.VK_LEFT);
 	    		break;
+	    	case MOVE_MOUSE:
+	    		int x = inputStream.read();
+				int y = inputStream.read();
+				// Moves mouse
+				robot.mouseMove(x, y);
+				System.out.println("moving mouse");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,18 +83,4 @@ public class ProcessConnectionThread implements Runnable{
 	}
 
 
-	private void processCommand(byte[] coordinate) {
-	
-			byte x = coordinate[0];
-			byte y = coordinate[1];
-			Robot robot;
-			try {
-				robot = new Robot();
-				robot.mouseMove(x, y);
-			} catch (AWTException e) {
-				e.printStackTrace();
-			}
-			
-		
-	}
 }

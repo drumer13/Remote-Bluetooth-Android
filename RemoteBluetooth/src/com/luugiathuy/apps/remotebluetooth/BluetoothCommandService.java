@@ -170,17 +170,17 @@ public class BluetoothCommandService {
         r.write(out);
     }
     
-    public void write(int out) {
-    	// Create temporary object
-        ConnectedThread r;
-        // Synchronize a copy of the ConnectedThread
-        synchronized (this) {
-            if (mState != STATE_CONNECTED) return;
-            r = mConnectedThread;
-        }
-        // Perform the write unsynchronized
-        r.write(out);
-    }
+//    public void write(int out) {
+//    	// Create temporary object
+//        ConnectedThread r;
+//        // Synchronize a copy of the ConnectedThread
+//        synchronized (this) {
+//            if (mState != STATE_CONNECTED) return;
+//            r = mConnectedThread;
+//        }
+//        // Perform the write unsynchronized
+//        r.write(out);
+//    }
     
     /**
      * Indicate that the connection attempt failed and notify the UI Activity.

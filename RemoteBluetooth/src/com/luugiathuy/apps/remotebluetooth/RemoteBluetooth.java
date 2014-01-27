@@ -36,6 +36,8 @@ public class RemoteBluetooth extends Activity {
     // Key names received from the BluetoothCommandService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
+
+	private static final byte MOVE_MOUSE = 3;
 	
 	// Name of the connected device
     private String mConnectedDeviceName = null;
@@ -90,8 +92,8 @@ public class RemoteBluetooth extends Activity {
 
      	                case MotionEvent.ACTION_MOVE:{
      	                	onMouseMove((byte) event.getX(), (byte) event.getY());
-     	                    xCoord.setText(String.valueOf((int) event.getX()));
-     	                    yCoord.setText(String.valueOf((int) event.getY()));
+     	                    xCoord.setText(String.valueOf((byte) event.getX()));
+     	                    yCoord.setText(String.valueOf((byte) event.getY()));
      	                    break;
      	                }
      	            }
@@ -241,11 +243,11 @@ public class RemoteBluetooth extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-			mCommandService.write(BluetoothCommandService.VOL_UP);
+			mCommandService.write(new byte[]{BluetoothCommandService.VOL_UP});
 			return true;
 		}
 		else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
-			mCommandService.write(BluetoothCommandService.VOL_DOWN);
+			mCommandService.write(new byte[]{BluetoothCommandService.VOL_DOWN});
 			return true;
 		}
 		
@@ -254,8 +256,7 @@ public class RemoteBluetooth extends Activity {
 	
 	public boolean onMouseMove(byte x, byte y){
 		
-		mCommandService.write(new byte[]{x,y});
-
+		mCommandService.write(new byte[]{MOVE_MOUSE,x,y});
 		return true;
 		
 	}
